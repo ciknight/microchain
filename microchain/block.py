@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import time
-from hashlib import blake2s
+from microchain import Hash
 
 __all__ = ['Block']
 
@@ -36,7 +36,7 @@ class Block():
             self.data,
             self.nonce).encode('utf-8')
 
-        return blake2s(original_str).hexdigest()
+        return Hash(original_str).hexdigest()
 
     @staticmethod
     def genesis():
