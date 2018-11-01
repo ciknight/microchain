@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import time
+
 from microchain import Hash
 
 __all__ = ['Block']
@@ -8,48 +9,66 @@ __all__ = ['Block']
 class Block():
 
     def __init__(
-            self, index: int, nonce: int, previous_hash: str, hash: str = None,
-            data: str = None, timestamp: int = None) -> None:
+        self,
+        index: int,
+        prev_hash: str,
+        data: str,
+        *,
+        nonce: int,
+        target: str,
+        timestamp: int = None,
+        hash: str = None,
+    ) -> None:
         self.index = index
+        self.prev_hash = prev_hash
+        self.data = data
         self.nonce = nonce
-        self.previous_hash = previous_hash
-        self.data = data or ''
+        self.tartget = target
         self.timestamp = timestamp or time.time()
-        self.hash = hash or self._calculate_hash()
+        self.hash = hash or self.calculate_hash()
 
     def __eq__(self, other) -> bool:
-        if (self.index == other.index
-                and self.previous_hash == other.previous_hash
-                and self.hash == other.hash):
+        if not isinstance(other, Block):
+            return False
 
-            return True
-        return False
+        if self.index != other.index:
+            return False
+
+        if self.hash != other.hash:
+            return False
+
+        return True
 
     def __repr__(self) -> str:
-        return 'Block({})'.format(self.hash)
+        return f'Block({repr(self.hash)})'
 
-    def _calculate_hash(self) -> str:
-        original_str: bytes = '{0}{1}{2}{3}{4}'.format(
-            self.index,
-            self.previous_hash,
-            self.timestamp,
-            self.data,
-            self.nonce).encode('utf-8')
+    def calculate_hash(self) -> str:
+        s: bytes = f'{self.index}{self.prev_hash}{self.data}{self.nonce}{self.tartget}{self.timestamp}'.encode(
+            'utf-8'
+        )
+        return Hash(s).hexdigest()
 
-        return Hash(original_str).hexdigest()
+    @property
+    def valid(self):
+        return self.is_valid_difficulty() and self.is_valid_hash()
+
+    def is_valid_hash(self) -> bool:
+        return self.hash == self.calculate_hash()
+
+    def is_valid_difficulty(self):
+        return int(self.hash, 16) <= int(self.tartget, 16)
 
     @staticmethod
-    def genesis():
-        args = (0, 0, '0')
-        kwargs = {'data': 'Genesis Block'}
-        return Block(*args, **kwargs)
+    def deserialize(other: dict) -> 'Block':
+        return Block(**other)
 
     def serialize(self) -> dict:
         return {
             'index': self.index,
-            'previous_hash': self.previous_hash,
-            'timestamp': self.timestamp,
+            'prev_hash': self.prev_hash,
             'data': self.data,
             'nonce': self.nonce,
-            'hash': self.hash
+            'target': self.tartget,
+            'timestamp': self.timestamp,
+            'hash': self.hash,
         }
