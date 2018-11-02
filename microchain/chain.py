@@ -3,6 +3,8 @@ from typing import List
 
 from microchain.block import Block
 
+__all__ = ['Chain']
+
 
 class Chain():
 
@@ -31,7 +33,7 @@ class Chain():
     def genesis() -> Block:
         args = (0, '0', 'Genesis Block')
         nonce = 0
-        target = '0x000000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF'
+        target = '0x0000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF'
         while True:
             block = Block(*args, nonce=nonce, target=target)
             if block.valid is True:
@@ -42,7 +44,7 @@ class Chain():
         return block
 
     def retarget(self) -> str:
-        return '0x00000000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF'
+        return '0x00000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF'
 
     def generate_next(self, data: str) -> Block:
         prev_block = self.latest_block
