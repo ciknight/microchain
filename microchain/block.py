@@ -25,7 +25,7 @@ class Block():
         self.nonce = nonce
         self.tartget = target
         self.timestamp = timestamp or time.time()
-        self.hash = hash or self.calculate_hash()
+        self.hash = hash or self._calculate_hash()
 
     def __eq__(self, other) -> bool:
         if not isinstance(other, Block):
@@ -42,7 +42,7 @@ class Block():
     def __repr__(self) -> str:
         return f'Block({repr(self.hash)})'
 
-    def calculate_hash(self) -> str:
+    def _calculate_hash(self) -> str:
         s: bytes = f'{self.index}{self.prev_hash}{self.data}{self.nonce}{self.tartget}{self.timestamp}'.encode(
             'utf-8'
         )
@@ -50,12 +50,12 @@ class Block():
 
     @property
     def valid(self):
-        return self.is_valid_difficulty() and self.is_valid_hash()
+        return self._is_valid_difficulty() and self._is_valid_hash()
 
-    def is_valid_hash(self) -> bool:
-        return self.hash == self.calculate_hash()
+    def _is_valid_hash(self) -> bool:
+        return self.hash == self._calculate_hash()
 
-    def is_valid_difficulty(self):
+    def _is_valid_difficulty(self):
         return int(self.hash, 16) <= int(self.tartget, 16)
 
     @staticmethod
