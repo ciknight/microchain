@@ -39,7 +39,7 @@ class Chain():
             if block.valid is True:
                 break
             else:
-                nonce + 1
+                nonce += 1
 
         return block
 
