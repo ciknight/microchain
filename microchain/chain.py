@@ -59,6 +59,6 @@ class Chain:
 
         return new_block
 
-    def mine(self, data: str = "null") -> bool:
+    def mine(self, data: str) -> bool:
         next_block = self.generate_next(data)
         return self.add_block(next_block)

@@ -4,13 +4,11 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-msgpack = "*"
-kademlia = "*"
+msgpack = "==1.0.0"
+kademlia = "==2.2"
 
 [dev-packages]
-ipython = "*"
-pytest = "*"
-ipdb = "*"
+pytest = "==5.3.5"
 
 [requires]
-python_version = "3.6"
+python_version = "3.7"

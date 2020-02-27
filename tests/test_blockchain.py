@@ -4,9 +4,9 @@ from microchain import Block, Chain
 
 
 def test_block():
-    args = (0, '0', '')
+    args = (0, "0", "")
     nonce = 0
-    target = '0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF'
+    target = "0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF"
     block = Block(*args, nonce=nonce, target=target)
     assert block.valid is True
     block.index = 100
@@ -16,7 +16,7 @@ def test_block():
 def test_genesis_block():
     block = Chain.genesis()
     assert block.valid is True
-    block.hash = 'abcdef'
+    block.hash = "abcdef"
     assert block.valid is False
 
 
