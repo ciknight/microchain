@@ -5,7 +5,7 @@ name = "pypi"
 
 [packages]
 msgpack = "==1.0.0"
-kademlia = "==2.2"
+kademlia = "==2.2.1"
 
 [dev-packages]
 pytest = "==5.3.5"
