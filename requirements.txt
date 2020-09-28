@@ -1,5 +1,5 @@
--i https://pypi.tuna.tsinghua.edu.cn/simple
+-i https://pypi.tuna.tsinghua.edu.cn/simple/
 kademlia==2.2
 msgpack==1.0.0
-rpcudp==4.0.0
-u-msgpack-python==2.5.2
+rpcudp==4.0.1
+u-msgpack-python==2.7.0
