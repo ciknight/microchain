@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import time
+from typing import Optional
 
 from microchain import Hash
 
@@ -15,8 +16,8 @@ class Block:
         *,
         nonce: int,
         target: str,
-        timestamp: int = None,
-        hash: str = None,
+        timestamp: Optional[int] = None,
+        hash: Optional[str] = None,
     ) -> None:
         self.index = index
         self.prev_hash = prev_hash
