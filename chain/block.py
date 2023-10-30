@@ -2,7 +2,7 @@
 import time
 from typing import Optional
 
-from microchain import Hash
+from chain import Hash
 
 __all__ = ["Block"]
 

@@ -2,7 +2,7 @@
 import logging
 from typing import List, Optional
 
-from microchain.block import Block
+from chain.block import Block
 
 __all__ = ["Chain"]
 
