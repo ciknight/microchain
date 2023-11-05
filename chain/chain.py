@@ -4,20 +4,20 @@ from typing import List, Optional
 
 from chain.block import Block
 
-__all__ = ["Chain"]
+__all__ = ["BlockChain"]
 
 
-class Chain:
+class BlockChain:
     _interval = 10  # second
 
     def __init__(self, blocks: Optional[List[Block]] = None) -> None:
-        self.blocks = blocks or [Chain.genesis()]
+        self.blocks = blocks or [BlockChain.genesis()]
 
     def __len__(self):
         return self.length
 
     def __repr__(self):
-        return f"Chain({repr(self.blocks)})"
+        return f"BlockChain({repr(self.blocks)})"
 
     @property
     def interval(self):

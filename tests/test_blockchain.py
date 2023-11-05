@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from microchain import Block, Chain
+from chain import Block, BlockChain
 
 
 def test_block():
@@ -14,14 +14,14 @@ def test_block():
 
 
 def test_genesis_block():
-    block = Chain.genesis()
+    block = BlockChain.genesis()
     assert block.valid is True
     block.hash = "abcdef"
     assert block.valid is False
 
 
 def test_chain():
-    chain = Chain()
+    chain = BlockChain()
     length = 2
     for _ in range(length):
         chain.mine()
