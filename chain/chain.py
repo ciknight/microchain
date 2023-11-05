@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 import logging
-from typing import List
+from typing import List, Optional
 
-from microchain.block import Block
+from chain.block import Block
 
 __all__ = ["Chain"]
 
@@ -10,7 +10,7 @@ __all__ = ["Chain"]
 class Chain:
     _interval = 10  # second
 
-    def __init__(self, blocks: List[Block] = None) -> None:
+    def __init__(self, blocks: Optional[List[Block]] = None) -> None:
         self.blocks = blocks or [Chain.genesis()]
 
     def __len__(self):
@@ -55,8 +55,8 @@ class Chain:
 
     @property
     def difficulty(self) -> float:
-        """ Difficulty is Calculate the hash of times.
-            Url: https://en.bitcoin.it/wiki/Difficulty#How_often_does_the_network_difficulty_change.3F
+        """Difficulty is Calculate the hash of times.
+        Url: https://en.bitcoin.it/wiki/Difficulty#How_often_does_the_network_difficulty_change.3F
         """
         difficulty_1_target = (
             "0x00000000FFFF0000000000000000000000000000000000000000000000000000"
@@ -65,7 +65,7 @@ class Chain:
 
     @property
     def current_target(self) -> str:
-        """ Retarget """
+        """ReTarget"""
         lb = self.latest_block
         # Every 10 blocks change network difficulty, bitcoin is 2016 blocks.
         block_count = 10
@@ -81,7 +81,7 @@ class Chain:
             )
             assert 1 / ratio_limit <= adjusted_timespan / target_timespan <= ratio_limit
             logging.info(
-                f"Retargeting at {self.length}, difficulty change: {target_timespan/adjusted_timespan:.2%}"
+                f"ReTargeting at {self.length}, difficulty change: {target_timespan/adjusted_timespan:.2%}"
             )
             new_target = int(lb.target, 16) * adjusted_timespan / target_timespan
             return f"{int(new_target):x}".rjust(64, "0")
